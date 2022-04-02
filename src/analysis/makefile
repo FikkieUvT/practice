@@ -1,10 +1,14 @@
-all: ../../gen/analysis/output/mean_availability.pdf ../../gen/analysis/output/mean_reviews.pdf ../../gen/analysis/output/mean_price.pdf ../../gen/analysis/output/final_score.csv ../../gen/analysis/output/top_10_student_cities.txt
+OUTPUT = ../../gen/analysis/output
+INPUT = ../../gen/analysis/input
 
-../../gen/analysis/output/mean_availability.pdf ../../gen/analysis/output/mean_reviews.pdf ../../gen/analysis/output/mean_price.pdf: ../../gen/analysis/input/combined_mean_data1.csv plot.R
+
+all: $(OUTPUT)/mean_availability.pdf $(OUTPUT)/mean_reviews.pdf $(OUTPUT)/mean_price.pdf $(OUTPUT)/final_score.csv $(OUTPUT)/top_10_student_cities.txt
+
+$(OUTPUT)/mean_availability.pdf .$(OUTPUT)/mean_reviews.pdf $(OUTPUT)/mean_price.pdf: ../../gen/analysis/input/combined_mean_data1.csv plot.R
 	R --vanilla < plot.R
 
-../../gen/analysis/output/final_score.csv: ../../gen/analysis/input/private_room.csv ../../gen/analysis/input/combined_mean_data1.csv mean.R
+$(OUTPUT)/final_score.csv: $(INPUT)/private_room.csv $(INPUT)/combined_mean_data1.csv mean.R
 	R --vanilla < mean.R
 
-../../gen/analysis/output/top_10_student_cities.txt: position.R
+$(OUTPUT)/top_10_student_cities.txt: position.R
 	R --vanilla < position.R
